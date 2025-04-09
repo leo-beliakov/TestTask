@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.leoapps.testtask.R
-import com.leoapps.testtask.theme.theme.placeholder
+import com.leoapps.testtask.common.theme.theme.placeholder
 
 @Composable
 fun DetailsRow(

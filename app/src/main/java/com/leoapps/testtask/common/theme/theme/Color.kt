@@ -1,4 +1,4 @@
-package com.leoapps.testtask.theme.theme
+package com.leoapps.testtask.common.theme.theme
 
 import androidx.compose.ui.graphics.Color
 

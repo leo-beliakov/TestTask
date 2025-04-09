@@ -1,6 +1,7 @@
 package com.leoapps.testtask.main.presentation.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,19 +18,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.leoapps.testtask.theme.theme.appRed
-import com.leoapps.testtask.theme.theme.secondaryText
+import com.leoapps.testtask.common.theme.theme.appRed
+import com.leoapps.testtask.common.theme.theme.secondaryText
 
 @Composable
 fun MenuItemRow(
     title: String,
     description: String,
     price: String,
-    imageRes: Int
+    imageRes: Int,
+    onClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onClick() }
             .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(22.dp)
@@ -71,7 +74,7 @@ fun MenuItemRow(
                     .aspectRatio(1f)
             )
             AddButton(
-                onClick = {},
+                onClick = { onClick() },
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(end = 10.dp)

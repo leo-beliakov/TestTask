@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.leoapps.testtask.main.presentation.RestaurantScreen
-import com.leoapps.testtask.theme.theme.TestTaskTheme
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import com.leoapps.testtask.common.theme.theme.TestTaskTheme
+import com.leoapps.testtask.root.RootScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +15,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TestTaskTheme {
-                RestaurantScreen()
+                RootScreen(
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
     }

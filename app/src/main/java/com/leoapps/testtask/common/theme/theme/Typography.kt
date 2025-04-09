@@ -1,4 +1,4 @@
-package com.leoapps.testtask.theme.theme
+package com.leoapps.testtask.common.theme.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable

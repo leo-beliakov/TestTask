@@ -22,11 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.leoapps.testtask.main.presentation.model.Offer
-import com.leoapps.testtask.theme.theme.appRed
-import com.leoapps.testtask.theme.theme.appYellow
-import com.leoapps.testtask.theme.theme.primaryText
-import com.leoapps.testtask.theme.theme.secondaryText
+import com.leoapps.testtask.common.domain.model.Offer
+import com.leoapps.testtask.common.theme.theme.appRed
+import com.leoapps.testtask.common.theme.theme.appYellow
+import com.leoapps.testtask.common.theme.theme.primaryText
+import com.leoapps.testtask.common.theme.theme.secondaryText
 
 @Composable
 fun SpecialOfferItem(
