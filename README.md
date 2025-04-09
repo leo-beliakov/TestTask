@@ -8,3 +8,5 @@ A simple app with two screens:
 ## 📸 Demo
 
 [▶️ Watch Demo](media/screenrecording.mov)
+
+📦 [Download APK](media/app-release.apk)
