@@ -33,6 +33,7 @@ import com.leoapps.testtask.main.presentation.composables.DetailsRow
 import com.leoapps.testtask.main.presentation.composables.HeaderToolbar
 import com.leoapps.testtask.main.presentation.composables.MenuItemRow
 import com.leoapps.testtask.main.presentation.composables.RestaurantHeader
+import com.leoapps.testtask.main.presentation.composables.RestaurantScreenShimmer
 import com.leoapps.testtask.main.presentation.composables.SpecialOffersSection
 import com.leoapps.testtask.main.presentation.composables.TopBar
 import com.leoapps.testtask.main.presentation.model.RestaurantUiState
@@ -53,10 +54,9 @@ fun RestaurantScreen(
     val coroutineScope = rememberCoroutineScope()
     var topBarHeight by remember { mutableIntStateOf(0) }
 
-    // todo use a fraction of the header hight instead of 100
     val showTabs by remember {
         derivedStateOf {
-            listState.firstVisibleItemIndex != 0 || listState.firstVisibleItemScrollOffset > 100
+            listState.firstVisibleItemIndex != 0 || listState.firstVisibleItemScrollOffset > 100f
         }
     }
 
@@ -71,11 +71,13 @@ fun RestaurantScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         RestaurantScreenContent(
             topBarHeight = topBarHeight,
+            extraScrollPerCategory = extraScrollPerCategory,
             uiState = uiState,
             listState = listState,
             onScrollToCategory = { selectedCategoryId = it },
             onItemClick = onItemClick
         )
+
         TopBar(
             title = uiState.restaurantName,
             categories = uiState.categoriesTabs,
@@ -115,7 +117,8 @@ fun RestaurantScreenContent(
     listState: LazyListState,
     onScrollToCategory: (Int) -> Unit,
     onItemClick: (Int) -> Unit,
-    topBarHeight: Int
+    topBarHeight: Int,
+    extraScrollPerCategory: Int,
 ) {
     // Observing scrolling to update the tab selection
     LaunchedEffect(listState, topBarHeight) {
@@ -125,13 +128,16 @@ fun RestaurantScreenContent(
                     index = index,
                     offset = offset,
                     topBarHeight = topBarHeight,
+                    extraScrollPerCategory = extraScrollPerCategory,
                     categories = uiState.categories
                 )
+                println("MyTag: indexToScroll = $indexToScroll, fwi = $index, offset = $offset, topBarHeight = $topBarHeight extraScrollPerCategory = $extraScrollPerCategory")
                 onScrollToCategory(indexToScroll)
             }
     }
 
     LazyColumn(
+        userScrollEnabled = !uiState.isLoading,
         state = listState,
         contentPadding = PaddingValues(
             bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
@@ -142,51 +148,59 @@ fun RestaurantScreenContent(
                 restaurantName = uiState.restaurantName,
             )
         }
-        item {
-            DetailsRow(
-                rating = uiState.rating,
-                schedule = uiState.schedule,
-                deliveryTime = uiState.deliveryTime,
-                modifier = Modifier.padding(top = 20.dp)
-            )
-        }
-        item {
-            SpecialOffersSection(
-                title = "Специальные предложения",
-                offers = uiState.specialOffers,
-                modifier = Modifier.padding(top = 20.dp)
-            )
-        }
-        uiState.categories.forEachIndexed { index, category ->
+        if (uiState.isLoading) {
             item {
-                CategoryHeader(
-                    title = category.title,
-                    modifier = Modifier.padding(top = CATEGORY_HEADER_PADDING_DP.dp)
+                RestaurantScreenShimmer()
+            }
+        } else {
+            item {
+                DetailsRow(
+                    rating = uiState.rating,
+                    schedule = uiState.schedule,
+                    deliveryTime = uiState.deliveryTime,
+                    modifier = Modifier.padding(top = 20.dp)
                 )
             }
-            items(category.items.size) { itemIndex ->
-                val menuItem = category.items[itemIndex]
-                MenuItemRow(
-                    title = menuItem.title,
-                    description = menuItem.description,
-                    price = menuItem.price,
-                    imageRes = menuItem.imageRes,
-                    onClick = { onItemClick(menuItem.id) }
+            item {
+                SpecialOffersSection(
+                    title = "Специальные предложения",
+                    offers = uiState.specialOffers,
+                    modifier = Modifier.padding(top = 20.dp)
                 )
+            }
+            uiState.categories.forEachIndexed { index, category ->
+                item {
+                    CategoryHeader(
+                        title = category.title,
+                        modifier = Modifier.padding(top = CATEGORY_HEADER_PADDING_DP.dp)
+                    )
+                }
+                items(category.items.size) { itemIndex ->
+                    val menuItem = category.items[itemIndex]
+                    MenuItemRow(
+                        title = menuItem.title,
+                        description = menuItem.description,
+                        price = menuItem.price,
+                        imageRes = menuItem.imageRes,
+                        onClick = { onItemClick(menuItem.id) }
+                    )
+                }
             }
         }
     }
 }
 
+// This function contains some durty hacks because solution out of the box doesnt work
 fun calculateTabForCategory(
     index: Int,
     offset: Int,
     topBarHeight: Int,
+    extraScrollPerCategory: Int,
     categories: List<Category>
 ) = when {
     index in 0..1 -> 0
-    index == 2 && offset < topBarHeight -> 0
-    index == 2 && offset >= topBarHeight -> 1
+    index == 2 && offset < topBarHeight - extraScrollPerCategory * 2 -> 0
+    index == 2 && offset >= topBarHeight - extraScrollPerCategory * 2 -> 1
     else -> {
         // some elements are covered by the top bar and not visible:
         val extraOffsetElements = 2

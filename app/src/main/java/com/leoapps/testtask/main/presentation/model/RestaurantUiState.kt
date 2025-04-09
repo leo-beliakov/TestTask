@@ -10,5 +10,6 @@ data class RestaurantUiState(
     val deliveryTime: String = "",
     val categories: List<Category> = emptyList(),
     val specialOffers: List<Offer> = emptyList(),
-    val categoriesTabs: List<CategoryTab> = emptyList()
+    val categoriesTabs: List<CategoryTab> = emptyList(),
+    val isLoading: Boolean = false
 )
