@@ -101,6 +101,7 @@ fun RestaurantScreen(
         HeaderToolbar(
             modifier = Modifier
                 .align(Alignment.TopStart)
+                .padding(top = 16.dp)
                 .statusBarsPadding()
         )
     }

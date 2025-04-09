@@ -63,6 +63,7 @@ fun TopBarContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(top = 16.dp)
                 .statusBarsPadding()
         ) {
             Row(
