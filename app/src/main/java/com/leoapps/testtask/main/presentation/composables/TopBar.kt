@@ -87,11 +87,13 @@ fun TopBarContent(
                     modifier = Modifier.width(ICONED_BUTTON_SIZE_DP.dp * 2 + 30.dp)
                 )
             }
-            CategoryTabs(
-                categories = categories,
-                selectedCategoryId = selectedCategoryId,
-                onTabSelected = onTabSelected
-            )
+            if (categories.isNotEmpty()) {
+                CategoryTabs(
+                    categories = categories,
+                    selectedCategoryId = selectedCategoryId,
+                    onTabSelected = onTabSelected
+                )
+            }
         }
     }
 }

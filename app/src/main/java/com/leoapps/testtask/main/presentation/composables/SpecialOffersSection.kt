@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.leoapps.testtask.R
 import com.leoapps.testtask.common.domain.model.Offer
 
+const val SPECIAL_OFFER_ITEM_WIDTH_DP = 150
+
 @Composable
 fun SpecialOffersSection(
     title: String,
@@ -64,7 +66,6 @@ fun SpecialOffersSection(
         }
 
         //todo make items 1/3 of the screen width
-        val itemWidth = 150.dp
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(14.dp),
@@ -73,7 +74,7 @@ fun SpecialOffersSection(
             items(offers) { offer ->
                 SpecialOfferItem(
                     offer = offer,
-                    itemWidth = itemWidth
+                    itemWidth = SPECIAL_OFFER_ITEM_WIDTH_DP.dp
                 )
             }
         }
