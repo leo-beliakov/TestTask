@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.leoapps.test.RestaurantScreen
+import com.leoapps.testtask.main.presentation.RestaurantScreen
 import com.leoapps.testtask.theme.theme.TestTaskTheme
 
 class MainActivity : ComponentActivity() {
