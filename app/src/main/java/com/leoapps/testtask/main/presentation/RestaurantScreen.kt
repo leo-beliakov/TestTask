@@ -26,6 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
+import com.leoapps.testtask.common.domain.model.Category
+import com.leoapps.testtask.common.utils.dpToPx
 import com.leoapps.testtask.main.presentation.composables.CategoryHeader
 import com.leoapps.testtask.main.presentation.composables.DetailsRow
 import com.leoapps.testtask.main.presentation.composables.HeaderToolbar
@@ -33,10 +35,9 @@ import com.leoapps.testtask.main.presentation.composables.MenuItemRow
 import com.leoapps.testtask.main.presentation.composables.RestaurantHeader
 import com.leoapps.testtask.main.presentation.composables.SpecialOffersSection
 import com.leoapps.testtask.main.presentation.composables.TopBar
-import com.leoapps.testtask.main.presentation.model.Category
 import com.leoapps.testtask.main.presentation.model.RestaurantUiState
-import com.leoapps.testtask.utils.dpToPx
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 const val CATEGORY_HEADER_PADDING_DP = 45
 const val STATIC_ELEMENTS_COUNT = 3
@@ -44,7 +45,8 @@ const val STATIC_ELEMENTS_COUNT = 3
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
 fun RestaurantScreen(
-    viewModel: RestaurantViewModel = RestaurantViewModel()
+    viewModel: RestaurantViewModel = koinViewModel<RestaurantViewModel>(),
+    onItemClick: (Int) -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val listState = rememberLazyListState()
@@ -71,7 +73,8 @@ fun RestaurantScreen(
             topBarHeight = topBarHeight,
             uiState = uiState,
             listState = listState,
-            onScrollToCategory = { selectedCategoryId = it }
+            onScrollToCategory = { selectedCategoryId = it },
+            onItemClick = onItemClick
         )
         TopBar(
             title = uiState.restaurantName,
@@ -86,7 +89,6 @@ fun RestaurantScreen(
                         categories = uiState.categories,
                         selectedCategoryId = catId
                     )
-                    println("MyTag  on Click = $index offset = $offset")
                     listState.animateScrollToItem(
                         index = index,
                         scrollOffset = offset,
@@ -112,6 +114,7 @@ fun RestaurantScreenContent(
     uiState: RestaurantUiState,
     listState: LazyListState,
     onScrollToCategory: (Int) -> Unit,
+    onItemClick: (Int) -> Unit,
     topBarHeight: Int
 ) {
     // Observing scrolling to update the tab selection
@@ -124,7 +127,6 @@ fun RestaurantScreenContent(
                     topBarHeight = topBarHeight,
                     categories = uiState.categories
                 )
-                println("MyTag onScroll index = $index offset = $offset topBarHeight = $topBarHeight ind = $indexToScroll")
                 onScrollToCategory(indexToScroll)
             }
     }
@@ -168,7 +170,8 @@ fun RestaurantScreenContent(
                     title = menuItem.title,
                     description = menuItem.description,
                     price = menuItem.price,
-                    imageRes = menuItem.imageRes
+                    imageRes = menuItem.imageRes,
+                    onClick = { onItemClick(menuItem.id) }
                 )
             }
         }

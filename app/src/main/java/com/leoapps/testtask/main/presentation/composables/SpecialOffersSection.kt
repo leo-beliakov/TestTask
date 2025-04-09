@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.leoapps.testtask.R
-import com.leoapps.testtask.main.presentation.model.Offer
+import com.leoapps.testtask.common.domain.model.Offer
 
 @Composable
 fun SpecialOffersSection(

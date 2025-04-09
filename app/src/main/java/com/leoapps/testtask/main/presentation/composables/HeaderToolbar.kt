@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.leoapps.testtask.R
-import com.leoapps.testtask.theme.theme.primaryText
+import com.leoapps.testtask.common.theme.theme.primaryText
 
 @Composable
 fun HeaderToolbar(modifier: Modifier = Modifier) {

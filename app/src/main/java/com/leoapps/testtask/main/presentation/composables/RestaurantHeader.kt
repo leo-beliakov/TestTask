@@ -22,7 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.leoapps.testtask.R
-import com.leoapps.testtask.theme.theme.secondaryText
+import com.leoapps.testtask.common.theme.theme.secondaryText
 
 @Composable
 fun RestaurantHeader(

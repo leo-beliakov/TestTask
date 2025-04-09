@@ -11,8 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.leoapps.testtask.common.theme.theme.primaryText
 import com.leoapps.testtask.main.presentation.model.CategoryTab
-import com.leoapps.testtask.theme.theme.primaryText
 
 @Composable
 fun CategoryTabs(

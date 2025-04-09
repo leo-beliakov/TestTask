@@ -1,4 +1,4 @@
-package com.leoapps.testtask.utils
+package com.leoapps.testtask.common.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity

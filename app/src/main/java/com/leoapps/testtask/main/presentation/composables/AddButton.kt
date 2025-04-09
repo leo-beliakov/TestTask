@@ -5,8 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.leoapps.testtask.R
-import com.leoapps.testtask.theme.theme.placeholder
-import com.leoapps.testtask.theme.theme.primaryText
+import com.leoapps.testtask.common.theme.theme.placeholder
+import com.leoapps.testtask.common.theme.theme.primaryText
 
 @Composable
 fun AddButton(
